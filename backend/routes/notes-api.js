@@ -64,7 +64,29 @@ router.put('/:id', async (req, res) => {
 });
 
 
+router.delete('/:id', async (req, res) => {
+  const {id} = req.params;
+  const query = `
+    DELETE FROM notes
+    WHERE id = $1
+    RETURNING *;
+  `
+  const value = [id]
 
+  try {
+    const data = await db.query(query, value);
+    const deletedNote = data.rows[0];
+
+    if (!deletedNote) {
+      return res.status(404).json("Note not found");
+    }
+
+    res.json({deletedNote});
+
+  } catch(err) {
+    res.status(500).json({error: err.message})
+  }
+});
 
 // router.post('/test', (req, res) => {
 //   console.log('Body:', req.body);
