@@ -22,7 +22,7 @@ app.use(cors({
 }));
 
 
-const noteRoutes = require('./routes/notes-api')
+const notesApiRoutes = require('./routes/notes-api')
 
 app.use('/api/notes', notesApiRoutes);
 

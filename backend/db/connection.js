@@ -1,5 +1,7 @@
 
-const { Pool } = require('pg');
+const { Client } = require('pg');
+require('dotenv').config();
+
 
 const dbParams = {
   host: process.env.DB_HOST,
@@ -9,7 +11,7 @@ const dbParams = {
   database: process.env.DB_NAME
 };
 
-const db = new Pool(dbParams);
+const db = new Client(dbParams);
 
 db.connect();
 
