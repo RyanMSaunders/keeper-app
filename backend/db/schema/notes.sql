@@ -6,4 +6,3 @@ CREATE TABLE notes (
   content TEXT
 );
 
-INSERT INTO notes (title) VALUES ('Buy Milk'), ('Finish homework')
