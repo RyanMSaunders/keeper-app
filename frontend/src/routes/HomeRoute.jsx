@@ -6,18 +6,18 @@ import { useNotes } from '../contexts/noteContext'
 
 
 export default function HomeRoute() {
-  const { notes } = useNotes();
+  const { notes, addNote } = useNotes();
   console.log(notes);
   
   
   return (
     <div>
-        {/* <CreateArea onAdd={addNote}></CreateArea> */}
+        <CreateArea onAdd={addNote}></CreateArea>
         {notes.map((noteItem, index) => {
           return (
             <Note
-              key={index}
-              id={index} // make this id?
+              key={noteItem.id}
+              id={noteItem.id} 
               title={noteItem.title}
               content={noteItem.content}
               // onDelete={deleteNote}

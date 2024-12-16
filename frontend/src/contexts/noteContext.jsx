@@ -23,13 +23,38 @@ const NoteProvider = ({children}) => {
       }
     }
     fetchNotes();
-  }, [])
+  }, []);
 
-  
- 
+  const addNote = async (newNote) => {
+    try{
+      const response = await axios.post("http://localhost:8080/api/notes", newNote);
+      console.log('response.data', response.data);
+      console.log('response.data.newNote', response.data.newNote );
+      
+
+      
+      setNotes((prevNotes) => {
+        return [...prevNotes, response.data.newNote];
+      })
+    } catch(error) {
+        console.log("error adding note", error.message);
+    }
+  }
+
+  const deleteNote = async(id) => {
+    try{
+      const response = await axios.delete(`http://localhost:8080/api/notes/${id}`);
+      setNotes((prevNotes) => {
+        return prevNotes.filter((note) => note.id !== id )
+      })
+    } catch(error) {
+      console.log("Error Deleting Note", error.message)
+    }
+  }
+
 
   return (
-    <NoteContext.Provider value={{notes}}>{children}</NoteContext.Provider>
+    <NoteContext.Provider value={{notes, addNote, deleteNote}}>{children}</NoteContext.Provider>
   );
 };
 
