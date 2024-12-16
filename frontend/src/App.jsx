@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeRoute from './routes/HomeRoute'
+import NotesProvider from './contexts/noteContext'
 
 function App() {
  
@@ -14,7 +15,9 @@ function App() {
     <>
       <Header />
       <Routes>
+        <NotesProvider>
         <Route path="/" element={< HomeRoute />} />
+        </NotesProvider>
       </Routes>
       <Footer />
     </>
