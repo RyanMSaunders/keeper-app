@@ -1,25 +1,40 @@
 
-import { useContext, createContext, Children } from "react"
+import { useContext, createContext, useState, useEffect } from "react"
+import axios from "axios";
+
 
 const NoteContext = createContext();
 
 
 const NoteProvider = ({children}) => {
+   // include state and functions
+  const [notes, setNotes] =  useState([]);
   
-  const contextValue = {
-    // include state and functions
+  // Fetch Notes
 
-    
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/notes")
+        console.log(response.data.notes);  // Check what is returned
+        setNotes(response.data.notes);
+      } catch(error) {
+        console.log("Error Fetching Notes", error.message);
+      }
+    }
+    fetchNotes();
+  }, [])
 
-  }
-
+  
  
 
-  return <NoteContext.Provider value={contextValue}>{children}</NoteContext.Provider>
+  return (
+    <NoteContext.Provider value={{notes}}>{children}</NoteContext.Provider>
+  );
 };
 
 export const useNotes = () => {
-  return useContext(NotesContext)
-}
+  return useContext(NoteContext)
+};
 
-export default NotesProvider;
+export default NoteProvider;
